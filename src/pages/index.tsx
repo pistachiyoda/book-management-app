@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import Head from "next/head";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       </Head>
       <main>
         <div>アイテム一覧ページ</div>
+        <Button variant="text">TEST</Button>
       </main>
     </>
   );
