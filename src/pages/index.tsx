@@ -1,21 +1,17 @@
-import { Button } from "@mui/material";
-import Head from "next/head";
-
+import Layout, { BreadcrumbParams } from "@/component/layout";
 export default function Home() {
+  const breadcrumbsParams: BreadcrumbParams[] = [
+    {
+      href: "/",
+      text: "書籍管理",
+    },
+  ];
+
   return (
     <>
-      <Head>
-        <title>書籍管理アプリ</title>
-        <meta
-          name="description"
-          content="書籍管理ができるサービスです。登録されている書籍の編集をすることができます。"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <main>
-        <div>アイテム一覧ページ</div>
-        <Button variant="text">TEST</Button>
-      </main>
+      <Layout breadcrumbsParams={breadcrumbsParams}>
+        <div>hoge</div>
+      </Layout>
     </>
   );
 }
