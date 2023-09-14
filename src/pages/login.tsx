@@ -17,7 +17,7 @@ export default function Login() {
   const router = useRouter();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    router.push("/");
+    router.push("/books");
   };
 
   return (

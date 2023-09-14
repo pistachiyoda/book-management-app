@@ -1,4 +1,5 @@
 import { getBookData, getALLBookIds } from "../../lib/book";
+import Layout, { BreadcrumbParams } from "@/component/layout";
 
 export async function getStaticProps({ params }: any) {
   const bookData = await getBookData(Number(params.id));
@@ -18,10 +19,20 @@ export async function getStaticPaths() {
 }
 
 export default function BookDetail({ bookData }: any) {
+  const breadcrumbsParams: BreadcrumbParams[] = [
+    {
+      href: "/books",
+      text: "書籍管理",
+    },
+    {
+      text: "アイテム詳細",
+    },
+  ];
   return (
     <>
-      <div>アイテム詳細ページ</div>
-      <div>{bookData.id}</div>
+      <Layout breadcrumbsParams={breadcrumbsParams}>
+        <div>fuga</div>
+      </Layout>
     </>
   );
 }

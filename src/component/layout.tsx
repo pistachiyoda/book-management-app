@@ -15,11 +15,17 @@ type LayoutProps = {
 
 export default function Layout({ children, breadcrumbsParams }: LayoutProps) {
   const breadcrumbs = breadcrumbsParams.map((breadcrumb, index) => {
+    if (index === breadcrumbsParams.length - 1) {
+      return (
+        <Typography key={index} color="primary.dark" fontWeight="bold">
+          {breadcrumb.text}
+        </Typography>
+      );
+    }
     return (
       <Link
         key={index}
-        underline="hover"
-        sx={{ display: "flex", alignItems: "center", mt: 2 }}
+        underline="always"
         color="inherit"
         href={breadcrumb.href}
       >
@@ -27,6 +33,7 @@ export default function Layout({ children, breadcrumbsParams }: LayoutProps) {
       </Link>
     );
   });
+
   return (
     <Container maxWidth="lg">
       <Head>
@@ -49,6 +56,7 @@ export default function Layout({ children, breadcrumbsParams }: LayoutProps) {
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
             aria-label="breadcrumb"
+            sx={{ display: "flex", alignItems: "center", mt: 2 }}
           >
             {breadcrumbs}
           </Breadcrumbs>
