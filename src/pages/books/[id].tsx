@@ -22,7 +22,7 @@ export default function BookDetail({ bookData }: any) {
   const breadcrumbsParams: BreadcrumbParams[] = [
     {
       href: "/books",
-      text: "書籍管理",
+      text: "書籍一覧",
     },
     {
       text: "アイテム詳細",

@@ -22,7 +22,7 @@ export default function BookEdit({ bookData }: any) {
   const breadcrumbsParams: BreadcrumbParams[] = [
     {
       href: "/books",
-      text: "書籍管理",
+      text: "書籍一覧",
     },
     {
       href: "/books/" + bookData.id,
