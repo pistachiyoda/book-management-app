@@ -1,7 +1,9 @@
 import Layout, { BreadcrumbParams } from "@/component/layout";
-import { books } from "@/lib/book";
+import { books, bookInfoCategories } from "@/lib/book";
 import {
+  Box,
   Button,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -10,6 +12,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import Image from "next/image";
 
 export default function Home() {
   const breadcrumbsParams: BreadcrumbParams[] = [
@@ -27,16 +30,7 @@ export default function Home() {
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  {[
-                    "id",
-                    "著者",
-                    "カテゴリー",
-                    "サムネイル",
-                    "概要",
-                    "発売日",
-                    "出版社",
-                    "",
-                  ].map((column, id) => (
+                  {bookInfoCategories.map((column, id) => (
                     <TableCell key={id} align="center" style={{ minWidth: 10 }}>
                       {column}
                     </TableCell>
@@ -50,17 +44,29 @@ export default function Home() {
                       {book.id}
                     </TableCell>
                     <TableCell key={book.id} align="center">
+                      {book.title}
+                    </TableCell>
+                    <TableCell key={book.id} align="center">
+                      <Box
+                        sx={{
+                          position: "relative",
+                          width: 100,
+                          height: 100,
+                        }}
+                      >
+                        <Image
+                          src={`/${book.image}`}
+                          alt={book.title}
+                          fill={true}
+                          style={{ objectFit: "contain" }}
+                        />
+                      </Box>
+                    </TableCell>
+                    <TableCell key={book.id} align="center">
                       {book.author}
                     </TableCell>
                     <TableCell key={book.id} align="center">
                       {book.category}
-                    </TableCell>
-                    <TableCell key={book.id} align="center">
-                      <img
-                        src={book.image} // 画像のパスを指定
-                        alt={book.name} // 画像の代替テキストを指定
-                        width="50" // 画像の幅を指定（必要に応じて調整）
-                      />
                     </TableCell>
                     <TableCell key={book.id} align="center">
                       {book.overview}
@@ -72,7 +78,9 @@ export default function Home() {
                       {book.publisher}
                     </TableCell>
                     <TableCell key={book.id} align="center">
-                      <Button variant="contained">詳細</Button>
+                      <Link href={`/books/${book.id}`}>
+                        <Button variant="contained">詳細</Button>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))}

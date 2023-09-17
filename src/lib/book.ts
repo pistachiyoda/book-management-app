@@ -1,23 +1,35 @@
 export type Book = {
   id: number;
-  name: string;
+  title: string;
+  image: string;
   author: string;
   category: string;
-  image: string;
   overview: string;
   publishDate: string;
   publisher: string;
 };
+
+export const bookInfoCategories = [
+  "id",
+  "タイトル",
+  "サムネイル",
+  "著者",
+  "カテゴリー",
+  "概要",
+  "発売日",
+  "出版社",
+  "",
+];
 
 export type BookEditableData = Omit<Book, "id">;
 
 export const books: Book[] = [
   {
     id: 0,
-    name: "ゼロから作るDeepLearning",
+    title: "ゼロから作るDeepLearning",
+    image: "0.jpg",
     author: "斎藤康毅",
     category: "機械学習",
-    image: "/images/zero-deeplearning.jpg",
     overview:
       "Pythonで書かれたゼロから作るDeepLearningのサンプルコードです。書籍内で紹介されているコードをJupyter Notebook形式で実行できます。",
     publishDate: "2016/09/24",
@@ -25,58 +37,60 @@ export const books: Book[] = [
   },
   {
     id: 1,
-    name: "リーダブルコード",
+    title: "リーダブルコード",
+    image: "1.jpg",
     author: "Dustin Boswell, Trevor Foucher",
     category: "プログラミング",
-    image: "/images/readable-code.jpg",
     overview: "プログラミングにおけるコードの書き方について解説した書籍です。",
     publishDate: "2012/03/01",
     publisher: "O'REILLY",
   },
   {
     id: 2,
-    name: "ハヤブサ消防団",
+    title: "ハヤブサ消防団",
+    image: "2.jpg",
     author: "山田章博",
     category: "小説",
-    image: "/images/hayabusa.jpg",
     overview: "消防団の活動を描いた小説です。",
     publishDate: "2019/08/01",
     publisher: "集英社",
   },
   {
     id: 3,
-    name: "星の王子さま",
+    title: "星の王子さま",
+    image: "3.jpg",
     author: "アントワーヌ・ド・サン＝テグジュペリ",
     category: "小説",
-    image: "/images/prince.jpg",
     overview: "星の王子さまの物語です。",
     publishDate: "1943/04/06",
     publisher: "講談社",
   },
   {
     id: 4,
-    name: "エルマーの冒険",
+    title: "エルマーの冒険",
+    image: "4.jpg",
     author: "デビッド・マッキー",
     category: "絵本",
-    image: "/images/elmer.jpg",
     overview: "エルマーの冒険の物語です。",
     publishDate: "1989/09/01",
     publisher: "講談社",
   },
 ];
 
-export async function getALLBookIds() {
+export async function getALLBookIds(books: Book[]) {
   return books.map((book) => {
-    {
+    return {
       params: {
-        id: book.id;
-      }
-    }
+        id: book.id.toString(),
+      },
+    };
   });
 }
 
 export async function getBookData(id: number) {
-  return {
-    id: id,
-  };
+  const book = books.find((book) => book.id === id);
+  if (!book) {
+    throw new Error("Book not found");
+  }
+  return book;
 }
