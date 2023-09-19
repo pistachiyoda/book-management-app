@@ -8,10 +8,18 @@ import {
   getBookDataFromLocalStorage,
 } from "../../../lib/book";
 import Layout, { BreadcrumbParams } from "@/component/layout";
-import { FC, FormEvent, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import {
   Box,
   Button,
+  Input,
   Stack,
   Table,
   TableBody,
@@ -65,27 +73,68 @@ export const BookDetail: FC<BookDetailProps> = ({
     },
   ];
 
-  const [currentBookData, setCurrentBookData] = useState<Book>();
+  const [currentBookData, setCurrentBookData] = useState<Book>({
+    id: 0,
+    title: "",
+    image: "",
+    author: "",
+    category: "",
+    overview: "",
+    publishDate: "",
+    publisher: "",
+  });
+
+  const [title, setTitle] = useState(currentBookData.title);
+  const [image, setImage] = useState("");
+  const [author, setAuthor] = useState(currentBookData.author);
+  const [category, setCategory] = useState(currentBookData.category);
+  const [overview, setOverview] = useState(currentBookData.overview);
+  const [publishDate, setPublishDate] = useState(currentBookData.publishDate);
+  const [publisher, setPublisher] = useState(currentBookData.publisher);
+
   useEffect(() => {
-    const currentBookData = getBookDataFromLocalStorage();
+    const currentBookData: Book = getBookDataFromLocalStorage()
+      ? getBookDataFromLocalStorage()[bookData.id]
+      : null;
     if (!currentBookData) {
       setCurrentBookData(bookData);
     } else {
-      setCurrentBookData(currentBookData[bookData.id]);
+      setCurrentBookData(currentBookData);
+      setTitle(currentBookData.title);
+      setImage(currentBookData.image);
+      setAuthor(currentBookData.author);
+      setCategory(currentBookData.category);
+      setOverview(currentBookData.overview);
+      setPublishDate(currentBookData.publishDate);
+      setPublisher(currentBookData.publisher);
     }
   }, [bookData]);
 
-  const [title, setTitle] = useState("");
-
-  const onChangeTitleText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
+  const onChangeText = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    setStateFunc: Dispatch<SetStateAction<string>>
+  ) => {
+    setStateFunc(event.target.value);
   };
+
+  const onChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) {
+      throw new Error("file not found.");
+    }
+    setImage(event.target.files[0].name);
+  };
+
   const router = useRouter();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     const currentBookData = getBookDataFromLocalStorage();
-    currentBookData[bookData.id].title = "test";
+    currentBookData[bookData.id].title = title;
+    currentBookData[bookData.id].image = image;
+    currentBookData[bookData.id].author = author;
+    currentBookData[bookData.id].category = category;
+    currentBookData[bookData.id].overview = overview;
+    currentBookData[bookData.id].publishDate = publishDate;
+    currentBookData[bookData.id].publisher = publisher;
     localStorage.setItem("books", JSON.stringify(currentBookData));
     console.log(currentBookData);
     router.push("/books");
@@ -122,7 +171,7 @@ export const BookDetail: FC<BookDetailProps> = ({
                       name="title"
                       variant="outlined"
                       margin="normal"
-                      onChange={onChangeTitleText}
+                      onChange={(e) => onChangeText(e, setTitle)}
                       value={title}
                     ></TextField>
                   </TableCell>
@@ -139,42 +188,73 @@ export const BookDetail: FC<BookDetailProps> = ({
                       }}
                     >
                       <Image
-                        src={`/${currentBookData?.image}`}
-                        alt={currentBookData?.title || ""}
+                        src={`/${image}`}
+                        alt={title || ""}
                         fill={true}
                         style={{ objectFit: "contain" }}
                       />
                     </Box>
+                    <Input type="file" onChange={onChangeImage}></Input>
                   </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[3]}</TableCell>
                   <TableCell align="center">
-                    {currentBookData?.author}
+                    <TextField
+                      name="title"
+                      variant="outlined"
+                      margin="normal"
+                      onChange={(e) => onChangeText(e, setAuthor)}
+                      value={author}
+                    ></TextField>
                   </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[4]}</TableCell>
                   <TableCell align="center">
-                    {currentBookData?.category}
+                    <TextField
+                      name="title"
+                      variant="outlined"
+                      margin="normal"
+                      onChange={(e) => onChangeText(e, setCategory)}
+                      value={category}
+                    ></TextField>
                   </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[5]}</TableCell>
                   <TableCell align="center">
-                    {currentBookData?.overview}
+                    <TextField
+                      name="title"
+                      variant="outlined"
+                      margin="normal"
+                      onChange={(e) => onChangeText(e, setOverview)}
+                      value={overview}
+                    ></TextField>
                   </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[6]}</TableCell>
                   <TableCell align="center">
-                    {currentBookData?.publishDate}
+                    <TextField
+                      name="title"
+                      variant="outlined"
+                      margin="normal"
+                      onChange={(e) => onChangeText(e, setPublishDate)}
+                      value={publishDate}
+                    ></TextField>
                   </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[7]}</TableCell>
                   <TableCell align="center">
-                    {currentBookData?.publisher}
+                    <TextField
+                      name="title"
+                      variant="outlined"
+                      margin="normal"
+                      onChange={(e) => onChangeText(e, setPublisher)}
+                      value={publisher}
+                    ></TextField>
                   </TableCell>
                 </TableRow>
               </TableBody>
