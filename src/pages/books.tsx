@@ -1,5 +1,10 @@
 import Layout, { BreadcrumbParams } from "@/component/layout";
-import { books, bookInfoCategories } from "@/lib/book";
+import {
+  booksArrayData,
+  bookInfoCategories,
+  Book,
+  getBookDataFromLocalStorage,
+} from "@/lib/book";
 import {
   Box,
   Button,
@@ -13,6 +18,7 @@ import {
   TableRow,
 } from "@mui/material";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const breadcrumbsParams: BreadcrumbParams[] = [
@@ -21,6 +27,22 @@ export default function Home() {
       text: "書籍一覧",
     },
   ];
+
+  const [books, setBooks] = useState<Book[]>([]);
+
+  const getBooksData = () => {
+    const storeData = getBookDataFromLocalStorage();
+    if (!storeData) {
+      localStorage.setItem("books", JSON.stringify(booksArrayData));
+      setBooks(booksArrayData);
+    } else {
+      setBooks(storeData);
+    }
+  };
+
+  useEffect(() => {
+    getBooksData();
+  }, []);
 
   return (
     <>
@@ -38,15 +60,15 @@ export default function Home() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {books.map((book) => (
+                {books.map((book: Book) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={book.id}>
-                    <TableCell key={book.id} align="center">
+                    <TableCell key={`bookId-${book.id}`} align="center">
                       {book.id}
                     </TableCell>
-                    <TableCell key={book.id} align="center">
+                    <TableCell key={`bookTitle-${book.id}`} align="center">
                       {book.title}
                     </TableCell>
-                    <TableCell key={book.id} align="center">
+                    <TableCell key={`bookImage-${book.id}`} align="center">
                       <Box
                         sx={{
                           position: "relative",
@@ -62,22 +84,25 @@ export default function Home() {
                         />
                       </Box>
                     </TableCell>
-                    <TableCell key={book.id} align="center">
+                    <TableCell key={`bookAuthor-${book.id}`} align="center">
                       {book.author}
                     </TableCell>
-                    <TableCell key={book.id} align="center">
+                    <TableCell key={`bookCategory-${book.id}`} align="center">
                       {book.category}
                     </TableCell>
-                    <TableCell key={book.id} align="center">
+                    <TableCell key={`bookOverview-${book.id}`} align="center">
                       {book.overview}
                     </TableCell>
-                    <TableCell key={book.id} align="center">
+                    <TableCell
+                      key={`bookPublishDate-${book.id}`}
+                      align="center"
+                    >
                       {book.publishDate}
                     </TableCell>
-                    <TableCell key={book.id} align="center">
+                    <TableCell key={`bookPublisher-${book.id}`} align="center">
                       {book.publisher}
                     </TableCell>
-                    <TableCell key={book.id} align="center">
+                    <TableCell key={`bookid-${book.id}`} align="center">
                       <Link href={`/books/${book.id}`}>
                         <Button variant="contained">詳細</Button>
                       </Link>

@@ -23,7 +23,7 @@ export const bookInfoCategories = [
 
 export type BookEditableData = Omit<Book, "id">;
 
-export const books: Book[] = [
+export const booksArrayData: Book[] = [
   {
     id: 0,
     title: "ゼロから作るDeepLearning",
@@ -87,10 +87,19 @@ export async function getALLBookIds(books: Book[]) {
   });
 }
 
-export async function getBookData(id: number) {
+export async function getBookData(id: number, books: Book[]) {
   const book = books.find((book) => book.id === id);
   if (!book) {
     throw new Error("Book not found");
   }
   return book;
 }
+
+export const getBookDataFromLocalStorage = () => {
+  const storeData = localStorage.getItem("books");
+  if (!storeData) {
+    return null;
+  } else {
+    return JSON.parse(storeData);
+  }
+};

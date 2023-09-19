@@ -2,12 +2,13 @@ import { GetStaticProps } from "next";
 import {
   getBookData,
   getALLBookIds,
-  books,
   Book,
   bookInfoCategories,
+  booksArrayData,
+  getBookDataFromLocalStorage,
 } from "../../lib/book";
 import Layout, { BreadcrumbParams } from "@/component/layout";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -28,7 +29,7 @@ type BookDetailProps = { bookData: Book };
 export const getStaticProps: GetStaticProps<BookDetailProps> = async ({
   params,
 }) => {
-  const bookData = await getBookData(Number(params?.id));
+  const bookData = await getBookData(Number(params?.id), booksArrayData);
   return {
     props: {
       bookData,
@@ -37,7 +38,7 @@ export const getStaticProps: GetStaticProps<BookDetailProps> = async ({
 };
 
 export async function getStaticPaths() {
-  const paths = await getALLBookIds(books);
+  const paths = await getALLBookIds(booksArrayData);
   return {
     paths,
     fallback: false,
@@ -58,6 +59,16 @@ export const BookDetail: FC<BookDetailProps> = ({
       text: "アイテム詳細",
     },
   ];
+
+  const [currentBookData, setCurrentBookData] = useState<Book>();
+  useEffect(() => {
+    const currentBookData = getBookDataFromLocalStorage();
+    if (!currentBookData) {
+      setCurrentBookData(bookData);
+    } else {
+      setCurrentBookData(currentBookData[bookData.id]);
+    }
+  }, [bookData]);
 
   return (
     <>
@@ -81,11 +92,11 @@ export const BookDetail: FC<BookDetailProps> = ({
               <TableBody>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[0]}</TableCell>
-                  <TableCell align="center">{bookData.id}</TableCell>
+                  <TableCell align="center">{currentBookData?.id}</TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[1]}</TableCell>
-                  <TableCell align="center">{bookData.title}</TableCell>
+                  <TableCell align="center">{currentBookData?.title}</TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[2]}</TableCell>
@@ -99,8 +110,8 @@ export const BookDetail: FC<BookDetailProps> = ({
                       }}
                     >
                       <Image
-                        src={`/${bookData.image}`}
-                        alt={bookData.title}
+                        src={`/${currentBookData?.image}`}
+                        alt={currentBookData?.title || ""}
                         fill={true}
                         style={{ objectFit: "contain" }}
                       />
@@ -109,23 +120,33 @@ export const BookDetail: FC<BookDetailProps> = ({
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[3]}</TableCell>
-                  <TableCell align="center">{bookData.author}</TableCell>
+                  <TableCell align="center">
+                    {currentBookData?.author}
+                  </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[4]}</TableCell>
-                  <TableCell align="center">{bookData.category}</TableCell>
+                  <TableCell align="center">
+                    {currentBookData?.category}
+                  </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[5]}</TableCell>
-                  <TableCell align="center">{bookData.overview}</TableCell>
+                  <TableCell align="center">
+                    {currentBookData?.overview}
+                  </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[6]}</TableCell>
-                  <TableCell align="center">{bookData.publishDate}</TableCell>
+                  <TableCell align="center">
+                    {currentBookData?.publishDate}
+                  </TableCell>
                 </TableRow>
                 <TableRow tabIndex={-1}>
                   <TableCell align="center">{bookInfoCategories[7]}</TableCell>
-                  <TableCell align="center">{bookData.publisher}</TableCell>
+                  <TableCell align="center">
+                    {currentBookData?.publisher}
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -144,7 +165,7 @@ export const BookDetail: FC<BookDetailProps> = ({
               戻る
             </Button>
           </Link>
-          <Link href={`/books/${bookData.id}/edit`}>
+          <Link href={`/books/${currentBookData?.id}/edit`}>
             <Button
               variant="contained"
               size="large"
