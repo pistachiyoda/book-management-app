@@ -32,6 +32,12 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+// Settings for MUIX Date Picker
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers";
+import { format } from "date-fns";
+import ja from "date-fns/locale/ja";
 
 type BookDetailProps = { bookData: Book };
 
@@ -124,6 +130,14 @@ export const BookDetail: FC<BookDetailProps> = ({
     setImage(event.target.files[0].name);
   };
 
+  const onChangePublishDate = (date: Date | null) => {
+    if (!date) {
+      setPublishDate("");
+      return;
+    }
+    setPublishDate(format(date, "yyyy/MM/dd"));
+  };
+
   const router = useRouter();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -141,154 +155,170 @@ export const BookDetail: FC<BookDetailProps> = ({
   };
 
   return (
-    <>
-      <Layout breadcrumbsParams={breadcrumbsParams}>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }}>
-          <TableContainer>
-            <Table sx={{ minWidth: 600 }} aria-label="book detail table">
-              <TableHead>
-                <TableRow>
-                  {["key", "value"].map((column, id) => (
-                    <TableCell
-                      key={id}
-                      align="center"
-                      style={{ minWidth: 200 }}
-                    >
-                      {column}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[0]}</TableCell>
-                  <TableCell align="center">{currentBookData?.id}</TableCell>
-                </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[1]}</TableCell>
-                  <TableCell align="center">
-                    <TextField
-                      name="title"
-                      variant="outlined"
-                      margin="normal"
-                      onChange={(e) => onChangeText(e, setTitle)}
-                      value={title}
-                    ></TextField>
-                  </TableCell>
-                </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[2]}</TableCell>
-                  <TableCell align="center">
-                    <Box
-                      sx={{
-                        position: "relative",
-                        width: 100,
-                        height: 100,
-                        margin: "auto",
-                      }}
-                    >
-                      <Image
-                        src={`/${image}`}
-                        alt={title || ""}
-                        fill={true}
-                        style={{ objectFit: "contain" }}
-                      />
-                    </Box>
-                    <Input type="file" onChange={onChangeImage}></Input>
-                  </TableCell>
-                </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[3]}</TableCell>
-                  <TableCell align="center">
-                    <TextField
-                      name="title"
-                      variant="outlined"
-                      margin="normal"
-                      onChange={(e) => onChangeText(e, setAuthor)}
-                      value={author}
-                    ></TextField>
-                  </TableCell>
-                </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[4]}</TableCell>
-                  <TableCell align="center">
-                    <TextField
-                      name="title"
-                      variant="outlined"
-                      margin="normal"
-                      onChange={(e) => onChangeText(e, setCategory)}
-                      value={category}
-                    ></TextField>
-                  </TableCell>
-                </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[5]}</TableCell>
-                  <TableCell align="center">
-                    <TextField
-                      name="title"
-                      variant="outlined"
-                      margin="normal"
-                      onChange={(e) => onChangeText(e, setOverview)}
-                      value={overview}
-                    ></TextField>
-                  </TableCell>
-                </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[6]}</TableCell>
-                  <TableCell align="center">
-                    <TextField
-                      name="title"
-                      variant="outlined"
-                      margin="normal"
-                      onChange={(e) => onChangeText(e, setPublishDate)}
-                      value={publishDate}
-                    ></TextField>
-                  </TableCell>
-                </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[7]}</TableCell>
-                  <TableCell align="center">
-                    <TextField
-                      name="title"
-                      variant="outlined"
-                      margin="normal"
-                      onChange={(e) => onChangeText(e, setPublisher)}
-                      value={publisher}
-                    ></TextField>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Stack
-            spacing={5}
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            mt={5}
-            pb={5}
-          >
-            <Link href={`/books`}>
-              <Button
-                variant="outlined"
-                size="large"
-                sx={{ fontWeight: "bold" }}
-              >
-                キャンセル
-              </Button>
-            </Link>
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              sx={{ fontWeight: "bold" }}
-            >
-              更新
+    <Layout breadcrumbsParams={breadcrumbsParams}>
+      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }}>
+        <TableContainer>
+          <Table sx={{ minWidth: 600 }} aria-label="book detail table">
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  align="center"
+                  sx={{ width: 300, fontWeight: "bold" }}
+                >
+                  項目
+                </TableCell>
+                <TableCell sx={{ fontWeight: "bold" }}>値</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell align="center" component="th" variant="head">
+                  {bookInfoCategories[0]}
+                </TableCell>
+                <TableCell>{currentBookData?.id}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center" component="th" variant="head">
+                  {bookInfoCategories[1]}
+                </TableCell>
+                <TableCell>
+                  <TextField
+                    name="title"
+                    variant="outlined"
+                    margin="normal"
+                    onChange={(e) => onChangeText(e, setTitle)}
+                    value={title}
+                    fullWidth
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center" component="th" variant="head">
+                  {bookInfoCategories[2]}
+                </TableCell>
+                <TableCell>
+                  <Box
+                    sx={{
+                      position: "relative",
+                      width: 100,
+                      height: 100,
+                    }}
+                  >
+                    <Image
+                      src={`/${image}`}
+                      alt={title || ""}
+                      fill={true}
+                      style={{ objectFit: "contain" }}
+                    />
+                  </Box>
+                  <Input type="file" onChange={onChangeImage}></Input>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center" component="th" variant="head">
+                  {bookInfoCategories[3]}
+                </TableCell>
+                <TableCell>
+                  <TextField
+                    name="title"
+                    variant="outlined"
+                    margin="normal"
+                    onChange={(e) => onChangeText(e, setAuthor)}
+                    value={author}
+                    fullWidth
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center" component="th" variant="head">
+                  {bookInfoCategories[4]}
+                </TableCell>
+                <TableCell>
+                  <TextField
+                    name="title"
+                    variant="outlined"
+                    margin="normal"
+                    onChange={(e) => onChangeText(e, setCategory)}
+                    value={category}
+                    fullWidth
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center" component="th" variant="head">
+                  {bookInfoCategories[5]}
+                </TableCell>
+                <TableCell>
+                  <TextField
+                    name="title"
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    margin="normal"
+                    onChange={(e) => onChangeText(e, setOverview)}
+                    value={overview}
+                    fullWidth
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center" component="th" variant="head">
+                  {bookInfoCategories[6]}
+                </TableCell>
+                <TableCell>
+                  <LocalizationProvider
+                    dateAdapter={AdapterDateFns}
+                    adapterLocale={ja}
+                  >
+                    <DatePicker
+                      onChange={(e) => onChangePublishDate(e)}
+                      value={new Date(publishDate)}
+                    />
+                  </LocalizationProvider>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="center" component="th" variant="head">
+                  {bookInfoCategories[7]}
+                </TableCell>
+                <TableCell>
+                  <TextField
+                    name="title"
+                    variant="outlined"
+                    margin="normal"
+                    onChange={(e) => onChangeText(e, setPublisher)}
+                    value={publisher}
+                    fullWidth
+                  />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Stack
+          spacing={5}
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          mt={5}
+          pb={5}
+        >
+          <Link href={`/books`}>
+            <Button variant="outlined" size="large" sx={{ fontWeight: "bold" }}>
+              キャンセル
             </Button>
-          </Stack>
-        </Box>
-      </Layout>
-    </>
+          </Link>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            sx={{ fontWeight: "bold" }}
+          >
+            更新
+          </Button>
+        </Stack>
+      </Box>
+    </Layout>
   );
 };
 

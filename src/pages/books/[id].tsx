@@ -78,35 +78,38 @@ export const BookDetail: FC<BookDetailProps> = ({
             <Table sx={{ minWidth: 600 }} aria-label="book detail table">
               <TableHead>
                 <TableRow>
-                  {["key", "value"].map((column, id) => (
-                    <TableCell
-                      key={id}
-                      align="center"
-                      style={{ minWidth: 200 }}
-                    >
-                      {column}
-                    </TableCell>
-                  ))}
+                  <TableCell
+                    align="center"
+                    sx={{ width: 300, fontWeight: "bold" }}
+                  >
+                    項目
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>値</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[0]}</TableCell>
-                  <TableCell align="center">{currentBookData?.id}</TableCell>
+                <TableRow>
+                  <TableCell align="center" component="th" variant="head">
+                    {bookInfoCategories[0]}
+                  </TableCell>
+                  <TableCell>{currentBookData?.id}</TableCell>
                 </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[1]}</TableCell>
-                  <TableCell align="center">{currentBookData?.title}</TableCell>
+                <TableRow>
+                  <TableCell align="center" component="th" variant="head">
+                    {bookInfoCategories[1]}
+                  </TableCell>
+                  <TableCell>{currentBookData?.title}</TableCell>
                 </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[2]}</TableCell>
-                  <TableCell align="center">
+                <TableRow>
+                  <TableCell align="center" component="th" variant="head">
+                    {bookInfoCategories[2]}
+                  </TableCell>
+                  <TableCell>
                     <Box
                       sx={{
                         position: "relative",
                         width: 100,
                         height: 100,
-                        margin: "auto",
                       }}
                     >
                       <Image
@@ -118,35 +121,35 @@ export const BookDetail: FC<BookDetailProps> = ({
                     </Box>
                   </TableCell>
                 </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[3]}</TableCell>
-                  <TableCell align="center">
-                    {currentBookData?.author}
+                <TableRow>
+                  <TableCell align="center" component="th" variant="head">
+                    {bookInfoCategories[3]}
                   </TableCell>
+                  <TableCell>{currentBookData?.author}</TableCell>
                 </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[4]}</TableCell>
-                  <TableCell align="center">
-                    {currentBookData?.category}
+                <TableRow>
+                  <TableCell align="center" component="th" variant="head">
+                    {bookInfoCategories[4]}
                   </TableCell>
+                  <TableCell>{currentBookData?.category}</TableCell>
                 </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[5]}</TableCell>
-                  <TableCell align="center">
-                    {currentBookData?.overview}
+                <TableRow>
+                  <TableCell align="center" component="th" variant="head">
+                    {bookInfoCategories[5]}
                   </TableCell>
+                  <TableCell>{currentBookData?.overview}</TableCell>
                 </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[6]}</TableCell>
-                  <TableCell align="center">
-                    {currentBookData?.publishDate}
+                <TableRow>
+                  <TableCell align="center" component="th" variant="head">
+                    {bookInfoCategories[6]}
                   </TableCell>
+                  <TableCell>{currentBookData?.publishDate}</TableCell>
                 </TableRow>
-                <TableRow tabIndex={-1}>
-                  <TableCell align="center">{bookInfoCategories[7]}</TableCell>
-                  <TableCell align="center">
-                    {currentBookData?.publisher}
+                <TableRow>
+                  <TableCell align="center" component="th" variant="head">
+                    {bookInfoCategories[7]}
                   </TableCell>
+                  <TableCell>{currentBookData?.publisher}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

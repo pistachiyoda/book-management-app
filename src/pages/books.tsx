@@ -1,13 +1,7 @@
 import Layout, { BreadcrumbParams } from "@/component/layout";
-import {
-  booksArrayData,
-  bookInfoCategories,
-  Book,
-  getBookDataFromLocalStorage,
-} from "@/lib/book";
+import { booksArrayData, Book, getBookDataFromLocalStorage } from "@/lib/book";
 import {
   Box,
-  Button,
   Link,
   Paper,
   Table,
@@ -47,28 +41,41 @@ export default function Home() {
   return (
     <>
       <Layout breadcrumbsParams={breadcrumbsParams}>
-        <Paper sx={{ width: "100%", overflow: "hidden", mt: 4 }}>
-          <TableContainer sx={{ maxHeight: 1000 }}>
+        <Paper sx={{ width: "100%", overflow: "hidden", mt: 4, mb: 4 }}>
+          <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  {bookInfoCategories.map((column, id) => (
-                    <TableCell key={id} align="center" style={{ minWidth: 10 }}>
-                      {column}
-                    </TableCell>
-                  ))}
+                  <TableCell align="center">id</TableCell>
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    タイトル
+                  </TableCell>
+                  <TableCell align="center">サムネイル</TableCell>
+                  <TableCell align="center">著者</TableCell>
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    カテゴリー
+                  </TableCell>
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    概要
+                  </TableCell>
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    発売日
+                  </TableCell>
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    出版社
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ minWidth: 100 }}
+                  ></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {books.map((book: Book) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={book.id}>
-                    <TableCell key={`bookId-${book.id}`} align="center">
-                      {book.id}
-                    </TableCell>
-                    <TableCell key={`bookTitle-${book.id}`} align="center">
-                      {book.title}
-                    </TableCell>
-                    <TableCell key={`bookImage-${book.id}`} align="center">
+                    <TableCell align="center">{book.id}</TableCell>
+                    <TableCell align="center">{book.title}</TableCell>
+                    <TableCell align="center">
                       <Box
                         sx={{
                           position: "relative",
@@ -84,27 +91,17 @@ export default function Home() {
                         />
                       </Box>
                     </TableCell>
-                    <TableCell key={`bookAuthor-${book.id}`} align="center">
-                      {book.author}
-                    </TableCell>
-                    <TableCell key={`bookCategory-${book.id}`} align="center">
-                      {book.category}
-                    </TableCell>
-                    <TableCell key={`bookOverview-${book.id}`} align="center">
-                      {book.overview}
-                    </TableCell>
-                    <TableCell
-                      key={`bookPublishDate-${book.id}`}
-                      align="center"
-                    >
-                      {book.publishDate}
-                    </TableCell>
-                    <TableCell key={`bookPublisher-${book.id}`} align="center">
-                      {book.publisher}
-                    </TableCell>
-                    <TableCell key={`bookid-${book.id}`} align="center">
-                      <Link href={`/books/${book.id}`}>
-                        <Button variant="contained">詳細</Button>
+                    <TableCell align="center">{book.author}</TableCell>
+                    <TableCell align="center">{book.category}</TableCell>
+                    <TableCell align="center">{book.overview}</TableCell>
+                    <TableCell align="center">{book.publishDate}</TableCell>
+                    <TableCell align="center">{book.publisher}</TableCell>
+                    <TableCell align="center">
+                      <Link
+                        href={`/books/${book.id}`}
+                        sx={{ fontWeight: "bold" }}
+                      >
+                        詳細
                       </Link>
                     </TableCell>
                   </TableRow>
