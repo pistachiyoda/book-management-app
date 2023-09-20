@@ -1,6 +1,11 @@
 書籍管理アプリのフロントエンド部分を実装したものです。
 
 # 実行方法
+## 方法①以下URLへアクセスする
+以下URLへデプロイしているので、すぐに動作を確認したい場合はこちらをお試しください。
+[https://book-management-app-rosy.vercel.app/](https://book-management-app-rosy.vercel.app/)へアクセスする。
+
+## 方法②開発サーバーを起動する
 以下コマンドにてサーバーを起動し、ブラウザより[http://localhost:3000](http://localhost:3000) へアクセスします。
 ```bash
 npm install
