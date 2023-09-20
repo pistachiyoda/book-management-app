@@ -3,7 +3,7 @@
 # 実行方法
 ## 方法①以下URLへアクセスする
 こちらにデプロイしているので、すぐに動作を確認したい場合はこちらをお試しください。<br>
-[https://book-management-app-rosy.vercel.app/](https://book-management-app-rosy.vercel.app/)へアクセスする。
+[https://book-management-app-rosy.vercel.app/](https://book-management-app-rosy.vercel.app/)
 
 ## 方法②開発サーバーを起動する
 以下コマンドにてサーバーを起動し、ブラウザより[http://localhost:3000](http://localhost:3000) へアクセスします。
@@ -18,7 +18,8 @@ npm run dev
 - EmailアドレスはHTMLのinputタグによるフォームバリデーションが実装されています。
 - Passwordにはバリデーションは何も実装していません。
 - Passwordフィールドの目のマークをクリックすることで伏せ字状態をオン・オフすることができます。
-- Emailアドレス, Passwordが入力された状態でSIGN INボタンをクリックすると書籍管理ページに遷移します。
+- Emailアドレス, Passwordが入力された状態で「SIGN IN」ボタンをクリックすると書籍管理ページに遷移します。
+
 ![スクリーンショット 2023-09-20 18 15 52](https://github.com/pistachiyoda/book-management-app/assets/28682050/9c49f36d-288a-4edb-8197-b7db9bdc38db)
 
 ## 書籍一覧ページ
