@@ -6,7 +6,7 @@ const Root = () => {
 
   useEffect(() => {
     router.push("/login");
-  }, []);
+  }, [router]);
 
   return null;
 };
