@@ -47,21 +47,40 @@ export default function Home() {
               <TableHead>
                 <TableRow>
                   <TableCell align="center">id</TableCell>
-                  <TableCell align="center" style={{ minWidth: 100 }}>
+                  <TableCell
+                    align="center"
+                    style={{ minWidth: 100, fontWeight: "bold" }}
+                  >
                     タイトル
                   </TableCell>
-                  <TableCell align="center">サムネイル</TableCell>
-                  <TableCell align="center">著者</TableCell>
-                  <TableCell align="center" style={{ minWidth: 100 }}>
+                  <TableCell align="center" style={{ fontWeight: "bold" }}>
+                    サムネイル
+                  </TableCell>
+                  <TableCell align="center" style={{ fontWeight: "bold" }}>
+                    著者
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    style={{ minWidth: 100, fontWeight: "bold" }}
+                  >
                     カテゴリー
                   </TableCell>
-                  <TableCell align="center" style={{ minWidth: 100 }}>
+                  <TableCell
+                    align="center"
+                    style={{ minWidth: 100, fontWeight: "bold" }}
+                  >
                     概要
                   </TableCell>
-                  <TableCell align="center" style={{ minWidth: 100 }}>
+                  <TableCell
+                    align="center"
+                    style={{ minWidth: 100, fontWeight: "bold" }}
+                  >
                     発売日
                   </TableCell>
-                  <TableCell align="center" style={{ minWidth: 100 }}>
+                  <TableCell
+                    align="center"
+                    style={{ minWidth: 100, fontWeight: "bold" }}
+                  >
                     出版社
                   </TableCell>
                   <TableCell
@@ -84,9 +103,10 @@ export default function Home() {
                         }}
                       >
                         <Image
-                          src={`/${book.image}`}
+                          src={book.image ? `/${book.image}` : "/noimage.jpg"}
                           alt={book.title}
                           fill={true}
+                          sizes="100px"
                           style={{ objectFit: "contain" }}
                         />
                       </Box>

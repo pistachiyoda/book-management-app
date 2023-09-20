@@ -150,7 +150,6 @@ export const BookDetail: FC<BookDetailProps> = ({
     currentBookData[bookData.id].publishDate = publishDate;
     currentBookData[bookData.id].publisher = publisher;
     localStorage.setItem("books", JSON.stringify(currentBookData));
-    console.log(currentBookData);
     router.push("/books");
   };
 
@@ -183,6 +182,7 @@ export const BookDetail: FC<BookDetailProps> = ({
                 </TableCell>
                 <TableCell>
                   <TextField
+                    required
                     name="title"
                     variant="outlined"
                     margin="normal"
@@ -205,9 +205,10 @@ export const BookDetail: FC<BookDetailProps> = ({
                     }}
                   >
                     <Image
-                      src={`/${image}`}
+                      src={image ? `/${image}` : "/noimage.jpg"}
                       alt={title || ""}
                       fill={true}
+                      sizes="100px"
                       style={{ objectFit: "contain" }}
                     />
                   </Box>
@@ -220,6 +221,7 @@ export const BookDetail: FC<BookDetailProps> = ({
                 </TableCell>
                 <TableCell>
                   <TextField
+                    required
                     name="title"
                     variant="outlined"
                     margin="normal"
@@ -235,6 +237,7 @@ export const BookDetail: FC<BookDetailProps> = ({
                 </TableCell>
                 <TableCell>
                   <TextField
+                    required
                     name="title"
                     variant="outlined"
                     margin="normal"
@@ -250,6 +253,7 @@ export const BookDetail: FC<BookDetailProps> = ({
                 </TableCell>
                 <TableCell>
                   <TextField
+                    required
                     name="title"
                     variant="outlined"
                     multiline
@@ -283,6 +287,7 @@ export const BookDetail: FC<BookDetailProps> = ({
                 </TableCell>
                 <TableCell>
                   <TextField
+                    required
                     name="title"
                     variant="outlined"
                     margin="normal"

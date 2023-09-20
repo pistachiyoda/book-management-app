@@ -113,9 +113,14 @@ export const BookDetail: FC<BookDetailProps> = ({
                       }}
                     >
                       <Image
-                        src={`/${currentBookData?.image}`}
+                        src={
+                          currentBookData?.image
+                            ? `/${currentBookData?.image}`
+                            : "/noimage.jpg"
+                        }
                         alt={currentBookData?.title || ""}
                         fill={true}
+                        sizes="100px"
                         style={{ objectFit: "contain" }}
                       />
                     </Box>
